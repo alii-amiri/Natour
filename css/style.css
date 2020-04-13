@@ -50,6 +50,7 @@ body {
     top: 40%;   /* in relation to the parent element */
     left: 50%;  /* in relation to the parent element */
     transform: translate(-50%, -50%);   /* in relation to the element itself */
+    text-align: center;
 }
 
 .heading-primary {
@@ -57,6 +58,7 @@ body {
     text-transform: uppercase;
 
     backface-visibility: hidden; /* this will remove that little unkown shaky movement at the end of the animation */
+    margin-bottom: 60px;
 }
 
 .heading-primary-main {
@@ -114,4 +116,69 @@ body {
         opacity: 1;
         transform: translate(0);    /* this will display it as it is in normal */
     }
+}
+
+@keyframes moveInBottom {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+
+.btn:link,
+.btn:visited {
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 15px 40px; /* the first value is for top and bottom and the second value is for the sides. if we write just one value; that value will be applied to all of them. we can also write four numbers top-right-bottom-left. */
+    display: inline-block;  /* prevent the btn to overlay with its upper text in the box */
+    border-radius: 100px;
+    transition: all .2s;
+    position: relative;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .2);  /* x y blur-amount rgba(red, blue, green, opacity) */
+}
+
+.btn:active {
+    transform: translateY(-1px);    /* this is not in relation to the hover state, but to the initial state. (that's why we use it with -1 one instead of 1 and it looks so smoother.) */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);  /* this will makes it look like the btn is getting further from the user and gets near the screen */ 
+}
+
+.btn-white {
+    background-color: #fff;
+    color: #777;
+}
+
+.btn::after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    border-radius: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;    /* send the pseudo-element behind the original element. */
+    transition: all .4s;
+}
+
+.btn-white::after {
+    background-color: #fff;
+}
+
+.btn:hover::after { /*  it applies to every element from btn class IN hover state! */
+    transform: scaleX(1.4) scaleY(1.6); /* that makes the top and bottom parts of the btn also fade significantly */
+    opacity: 0; /*  this trick (opacity in here + transition in the initial state) will make the psuedo-element fades at the hover state.  */
+}
+
+.btn-animated {
+    animation: moveInBottom .5s ease-out .75s;
+    animation-fill-mode: backwards; /* this wil automatically apllies the styles of the 0% animation state before the animation starts. */
 }
